@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Criminal Intent</string>
+
+    <!-- Todo CrimeFragment string resources -->
+    <string name="hint_crime_title">Enter a title for the crime</string>
+    <string name="label_crime_title">Title</string>
+    <string name="label_crime_details">Details</string>
+    <string name="label_solved_crime">Solved</string>
 </resources>
