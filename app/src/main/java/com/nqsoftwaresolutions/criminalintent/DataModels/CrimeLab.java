@@ -1,4 +1,4 @@
-package com.nqsoftwaresolutions.criminalintent;
+package com.nqsoftwaresolutions.criminalintent.DataModels;
 
 import android.content.Context;
 

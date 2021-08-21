@@ -1,4 +1,4 @@
-package com.nqsoftwaresolutions.criminalintent;
+package com.nqsoftwaresolutions.criminalintent.DataModels;
 
 import java.util.Date;
 import java.util.UUID;

@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.nqsoftwaresolutions.criminalintent.DataModels.Crime;
+
 public class CrimeFragment extends Fragment {
     private Crime mCrime;
 
