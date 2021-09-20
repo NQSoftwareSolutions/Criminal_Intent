@@ -14,6 +14,13 @@ public class Crime {
         mDate = new Date();
     }
 
+    public Crime(String title,boolean solved) {
+        mTitle = title;
+        mSolved = solved;
+        mId = UUID.randomUUID();
+        mDate = new Date();
+    }
+
     public UUID getId() {
         return mId;
     }

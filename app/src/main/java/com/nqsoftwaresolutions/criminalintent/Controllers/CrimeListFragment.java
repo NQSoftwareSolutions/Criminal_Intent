@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,7 +58,7 @@ public class CrimeListFragment extends Fragment {
     private void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimeList = crimeLab.getCrimeList();
-        mCrimeAdapter = new CrimeAdapter(getContext() ,crimeList);
+        mCrimeAdapter = new CrimeAdapter(crimeList);
         mCrimeListRv.setAdapter(mCrimeAdapter);
         mCrimeListRv.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -76,10 +77,10 @@ public class CrimeListFragment extends Fragment {
         private List<Crime> mCrimeList;
         private LayoutInflater mInflater;
 
-        public CrimeAdapter(Context context, List<Crime> crimes){
+        public CrimeAdapter(List<Crime> crimes){
             mCrimeList = crimes;
-            mInflater = LayoutInflater.from(context);
         }
+
 
         /**Todo onCreateViewHolder
          * @param parent layout
@@ -93,9 +94,8 @@ public class CrimeListFragment extends Fragment {
         @NonNull
         @Override
         public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = mInflater
-                    .inflate(R.layout.crime_list_item_row, parent, false);
-            return new CrimeHolder(itemView, new CrimeAdapter(getContext(), mCrimeList));
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            return new CrimeHolder(layoutInflater, parent);
         }
 
         /**Todo onBindViewHolder
@@ -107,10 +107,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull CrimeHolder holder, int position) {
             Crime crime = mCrimeList.get(position);
-            String crimeTitle = crime.getTitle();
-            String crimeDate = crime.getDate().toString();
-            holder.mTitleTv.setText(crimeTitle);
-            holder.mDateTv.setText(crimeDate);
+            holder.bind(crime);
         }
 
         /**Todo getItemCount
@@ -131,15 +128,28 @@ public class CrimeListFragment extends Fragment {
          *          attaching the item views with parent or not
          *      we are getting view which we have to put in Recycler view & update those
          */
-        private class CrimeHolder extends RecyclerView.ViewHolder {
-            private TextView mTitleTv, mDateTv;
-            private CrimeAdapter mAdapter;
+        private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            private final TextView mTitleTv;
+            private final TextView mDateTv;
+            private Crime mCrime;
 
-            public CrimeHolder(@NonNull View itemView, CrimeAdapter adapter) {
-                super(itemView);
+            public CrimeHolder(@NonNull LayoutInflater inflater, ViewGroup parent) {
+                super(inflater.inflate(R.layout.crime_list_item_row, parent, false));
                 mTitleTv = itemView.findViewById(R.id.id_tv_crime_title);
                 mDateTv = itemView.findViewById(R.id.id_tv_crime_date);
-                this.mAdapter = adapter;
+                itemView.setOnClickListener(this);
+            }
+
+            public void bind(Crime crime){
+                mCrime = crime;
+                mTitleTv.setText(mCrime.getTitle());
+                mDateTv.setText(mCrime.getDate().toString());
+            }
+
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), mCrime.getTitle() +" is Clicked!", Toast.LENGTH_SHORT).show();
             }
         }
     }
